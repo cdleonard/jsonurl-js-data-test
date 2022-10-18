@@ -1,0 +1,6 @@
+{
+  "name": "jsonurl-js-data-test",
+  "version": "0.1.0",
+  "description": "This validates jsonurl-test-data against a known-good implementation",
+  "license": "MIT"
+}
