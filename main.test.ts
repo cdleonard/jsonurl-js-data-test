@@ -1,5 +1,35 @@
-import {describe, expect, test} from '@jest/globals';
+import { expect, test } from '@jest/globals';
+const JsonURL = require("@jsonurl/jsonurl");
+const fs = require('fs');
 
-test('1 + 2 == 3', () => {
-    expect(1 + 2).toBe(3);
-});
+let path = './test-data/test_data.json'
+
+function main() {
+    if (!fs.existsSync(path)) {
+        throw `missing ${path}`
+    }
+    let data_file_text = fs.readFileSync(path, { encoding: "utf8" });
+    let data = JSON.parse(data_file_text)
+
+    for (let index = 0; index < data.length; index++) {
+        test(index.toString(), function () {
+            let item = data[index]
+            let type = item["type"];
+            if (type == "roundtrip" || type === undefined) {
+                let text = item.text
+                let data = item.data
+                expect(JsonURL.parse(text)).toEqual(data)
+                expect(JsonURL.stringify(data)).toEqual(text)
+            } else if (type == "fail") {
+                let text = item.text
+                expect(() => JsonURL.parse(text)).toThrow();
+            } else {
+                throw `bad type ${type}`
+            }
+        });
+    }
+}
+
+main();
+
+export { }
