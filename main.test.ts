@@ -18,18 +18,28 @@ function main() {
     test(key, function () {
       let item = data[key];
       let type = item["type"];
+      let opts: any = {};
+      if ("implied_array" in item) {
+        opts.impliedArray = [];
+      }
+      if ("implied_object" in item) {
+        opts.impliedObject = {};
+      }
+      if ("aqf" in item) {
+        opts.AQF = true;
+      }
       if (type == "roundtrip" || type === undefined) {
         let text = item.text;
         let data = item.data;
-        expect(JsonURL.parse(text)).toEqual(data);
-        expect(JsonURL.stringify(data)).toEqual(text);
+        expect(JsonURL.parse(text, opts)).toEqual(data);
+        expect(JsonURL.stringify(data, opts)).toEqual(text);
       } else if (type == "fail") {
         let text = item.text;
-        expect(() => JsonURL.parse(text)).toThrow();
+        expect(() => JsonURL.parse(text, opts)).toThrow();
       } else if (type == "load") {
         let text = item.text;
         let data = item.data;
-        expect(JsonURL.parse(text)).toEqual(data);
+        expect(JsonURL.parse(text, opts)).toEqual(data);
       } else {
         throw `bad test type ${type}`;
       }
