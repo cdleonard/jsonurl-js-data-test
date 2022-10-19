@@ -19,13 +19,13 @@ function main() {
       let item = data[key];
       let type = item["type"];
       let opts: any = {};
-      if ("implied_array" in item) {
+      if (item.implied_array) {
         opts.impliedArray = [];
       }
-      if ("implied_object" in item) {
+      if (item.implied_object) {
         opts.impliedObject = {};
       }
-      if ("aqf" in item) {
+      if (item.aqf) {
         opts.AQF = true;
       }
       if (type == "roundtrip" || type === undefined) {
