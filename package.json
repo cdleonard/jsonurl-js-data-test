@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@jsonurl/jsonurl": "^1.1.6",
+    "@jsonurl/jsonurl": "^1.1.7",
     "jest": "^29.2.1",
     "ts-jest": "^29.0.3"
   }
